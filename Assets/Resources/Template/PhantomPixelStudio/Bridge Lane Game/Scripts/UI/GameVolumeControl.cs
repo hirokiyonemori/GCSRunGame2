@@ -104,5 +104,12 @@ namespace LaneGame
                 Debug.LogFormat("Effects Volume Saved: {0}", volumeSettings.effectsVolume);
             PlayerPrefs.Save();
         }
+
+        // URL
+        public void onClickTwitterButton()
+        {
+            Application.OpenURL("https://twitter.com/gamelove_hiro");//""の中には開きたいWebページのURLを入力します
+        }
+
     }
 }
