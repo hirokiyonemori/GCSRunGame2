@@ -8481,6 +8481,8 @@ MonoBehaviour:
   lateralSpeed: 20
   moveInput: {x: 0, y: 0}
   countdown: {fileID: 251759257}
+  movableRange: 3
+  m_Rigidbody: {fileID: 1290633088}
 --- !u!65 &1290633087
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8508,7 +8510,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 116
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!1 &1312601992
 GameObject:
@@ -12823,6 +12825,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 5835027699684610758, guid: 50b041a76f88153448dd9157d9979014, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5835027699684610759, guid: 50b041a76f88153448dd9157d9979014, type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 50b041a76f88153448dd9157d9979014, type: 3}
 --- !u!1001 &8751879299773229064
@@ -12838,7 +12848,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8751879300056330918, guid: 5e1c24cce78ca2641b291e1c0ff1c2aa, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8751879300056330919, guid: 5e1c24cce78ca2641b291e1c0ff1c2aa, type: 3}
       propertyPath: m_RootOrder
