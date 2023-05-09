@@ -68,8 +68,8 @@ public class EnemyStatus : MonoBehaviour
     public void UpdateHPValue()
     {
         //hpSlider.value = (float)GetHp() / (float)GetMaxHp();
-        LogSystem.Log("  (float)GetHp() " + (float)GetHp());
-        LogSystem.Log("  (float)GetMaxHp() " + (float)GetMaxHp());
+        //LogSystem.Log("  (float)GetHp() " + (float)GetHp());
+        //LogSystem.Log("  (float)GetMaxHp() " + (float)GetMaxHp());
 
         barAnimator.value = (float)GetHp() / (float)GetMaxHp();
     }
