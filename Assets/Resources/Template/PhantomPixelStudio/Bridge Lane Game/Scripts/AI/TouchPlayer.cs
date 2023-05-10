@@ -4,13 +4,33 @@ namespace LaneGame.AI
 {
     public class TouchPlayer : MonoBehaviour
     {
-        private void OnCollisionEnter(Collision collision)
+        private void OnTriggerEnter(Collider collision)
         {
-            if (collision.gameObject.CompareTag("Player"))
+            // プレイヤーと衝突した場合
+            if (collision.gameObject.tag == "Player")
             {
-                //if any enemy touches a player object ,we'll call the unit Manager to subtract 1 from the player count, then we destroy the enemy
+                // プレイヤーユニットマネージャーからプレイヤーの数を1減らす
                 PlayerUnitManager.UnitManager.HandleUnits(-1);
-                Destroy(gameObject.transform.parent.gameObject);
+                //PlayerUnitManager.UnitManager.RemoveUnit(collision.gameObject);
+                // 敵のオブジェクトが"Enemy"タグを持っている場合は、敵の親オブジェクトを削除する
+
+                if (this.gameObject.CompareTag("Enemy")){
+                    Destroy(gameObject.transform.parent.gameObject);
+                }
+           
+            }
+            //LogSystem.Log(" collision.gameObject.tag " + collision.gameObject.tag);
+            // 味方と衝突した場合
+            if (collision.gameObject.tag == "Fellow" )
+            {
+                // 味方のオブジェクトを削除する
+                // 敵のオブジェクトが"Enemy"タグを持っている場合は、敵の親オブジェクトを削除する
+                PlayerUnitManager.UnitManager.RemoveUnit(collision.gameObject);
+                if (this.gameObject.CompareTag("Enemy"))
+                {
+                    Destroy(gameObject.transform.parent.gameObject);
+                }
+
             }
         }
     }

@@ -12,16 +12,27 @@ namespace LaneGame
         [SerializeField] private HandleCountdown countdown;
         //private Rigidbody rb;
         private PlayerControls controls;
-        private bool canStart = false;
+        
         public float movableRange = 3.0f;
         public Rigidbody m_Rigidbody;
         private float turnForce = 500.0f;
 
+        public CharacterMovement characterMovement;
+
+        [SerializeField]
+        private EnemyAttack enemyAttack;
+
+        [SerializeField]
+        private GameObject battleStartUI;
+
+        
         private void Awake()
         {
             controls = new PlayerControls(); //this can be replaced with your own control scheme
-          //  rb = GetComponent<Rigidbody>();
+            m_Rigidbody = GetComponent<Rigidbody>();
             countdown.StartGame += GivePlayerSpeed;
+            PlayerUnitManager.hasBattleStarted = false;
+            PlayerUnitManager.isBattle = false;
         }
 
         private void OnEnable()
@@ -36,17 +47,38 @@ namespace LaneGame
 
         private void FixedUpdate()
         {
-            if (canStart)
+            // まだスタートしていない
+            if (PlayerUnitManager.canStart)
             {
-                HandleLateralMovement();
-                HandleForwardMovement();
+                // 移動中
+                if (!PlayerUnitManager.isBattle){
+                    HandleLateralMovement();
+                    HandleForwardMovement();
+				}
+				else
+				{
+
+					if (!characterMovement.GetIsMoving() && !PlayerUnitManager.hasBattleStarted)
+                    {
+                        PlayerUnitManager.UnitManager.AnimationPlay();
+                        //await enemyAttack.BattleStart();
+                        StartCoroutine(enemyAttack.AttackPlayer());
+
+                        battleStartUI.SetActive(true);
+                        PlayerUnitManager.hasBattleStarted = true;
+                        // バトル中は移動を止める
+
+                    }
+                    this.m_Rigidbody.velocity = Vector3.zero;
+                }
+                
             }
             
         }
 
         private void GivePlayerSpeed()
         {
-            canStart = true;
+            PlayerUnitManager.canStart = true;
         }
         private void HandleForwardMovement()
         {
@@ -64,20 +96,32 @@ namespace LaneGame
             //Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
 
 
-
+            
             if ((Input.GetKey(KeyCode.LeftArrow)) && -this.movableRange < this.transform.position.x)
             {
-                Debug.Log(" left " + this.transform.position.x );
-                this.m_Rigidbody.AddForce(-this.turnForce, 0, 0);
+                //LogSystem.Log(" left " + this.transform.position.x );
+                //this.rb.AddForce(-this.turnForce, 2, 0);
+                this.m_Rigidbody.AddForce(-this.turnForce, 2, 0);
+                //this.m_Rigidbody.velocity = transform.forward * forwardSpeed - transform.right * this.turnForce;
 
             }
             else if ((Input.GetKey(KeyCode.RightArrow)) && this.transform.position.x < this.movableRange)
             {
-                Debug.Log(" right " + this.transform.position.x);
-                this.m_Rigidbody.AddForce(this.turnForce, 0, 0);
+                //LogSystem.Log(" right " + this.transform.position.x);
+                //this.m_Rigidbody.velocity = transform.forward * forwardSpeed + transform.right * this.turnForce;
+                //this.rb.AddForce(this.turnForce, 2, 0);
+                this.m_Rigidbody.AddForce(this.turnForce, 2, 0);
             }
-            this.m_Rigidbody.velocity = new Vector3(0, 0, forwardSpeed);
-
+			else
+			{
+                this.m_Rigidbody.velocity = transform.forward * forwardSpeed;
+            }
+            if (Input.GetKey(KeyCode.Space)){
+                //LogSystem.Log(" right " + this.transform.position.x);
+                
+                //this.m_Rigidbody.AddForce(new Vector3(0, 2, 0));
+            }
+            //this.rb.velocity = new Vector3(0, 0, forwardSpeed);
             
 
         }

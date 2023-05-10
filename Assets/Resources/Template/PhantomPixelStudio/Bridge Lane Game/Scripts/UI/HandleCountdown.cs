@@ -16,10 +16,12 @@ namespace LaneGame
         {
             countdownStartValue -= Time.deltaTime;
             countdownText.text = countdownStartValue.ToString("0");
+
             if (countdownStartValue < 0)
             {
-                //We can now start moving!
+                // カウントダウンUIを非表示にする
                 countdownUI.SetActive(false);
+                // ゲームを開始する
                 StartGame();
             }
         }
