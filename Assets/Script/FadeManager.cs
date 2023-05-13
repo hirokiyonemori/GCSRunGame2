@@ -5,17 +5,17 @@ using System;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// ƒtƒF[ƒhƒCƒ“ƒAƒEƒg‚ÌŠÇ—
+/// ï¿½tï¿½Fï¿½[ï¿½hï¿½Cï¿½ï¿½ï¿½Aï¿½Eï¿½gï¿½ÌŠÇ—ï¿½
 /// </summary>
 public class FadeManager : MonoBehaviour
 {
     /// <summary>
-    /// ƒtƒF[ƒhƒCƒ“ƒAƒEƒg‚ğ‚³‚¹‚éƒIƒuƒWƒFƒNƒg
+    /// ï¿½tï¿½Fï¿½[ï¿½hï¿½Cï¿½ï¿½ï¿½Aï¿½Eï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½g
     /// </summary>
     [SerializeField] private Image _fadeImage;
 
     /// <summary>
-    /// ƒtƒF[ƒhƒAƒEƒgƒXƒe[ƒ^ƒX
+    /// ï¿½tï¿½Fï¿½[ï¿½hï¿½Aï¿½Eï¿½gï¿½Xï¿½eï¿½[ï¿½^ï¿½X
     /// </summary>
     private enum FADE_MODE
     {
@@ -27,7 +27,7 @@ public class FadeManager : MonoBehaviour
     private FADE_MODE _fadeMode = FADE_MODE.NONE;
 
     /// <summary>
-    /// ŠO•”‚©‚çƒAƒNƒZƒX‚·‚é‚½‚ßstatic‚É‚·‚é
+    /// ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½Nï¿½Zï¿½Xï¿½ï¿½ï¿½é‚½ï¿½ï¿½staticï¿½É‚ï¿½ï¿½ï¿½
     /// </summary>
     private static FadeManager _main;
 
@@ -37,13 +37,13 @@ public class FadeManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Start‚æ‚è‘‚­Às‚³‚ê‚é
+    /// Startï¿½ï¿½è‘ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½ï¿½ï¿½
     /// </summary>
     private void Awake()
     {
-        //F‚ğ‰Šú‰»
+        //ï¿½Fï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         _fadeImage.color = new Color(0, 0, 0, 0);
-        //ƒIƒuƒWƒFƒNƒg–³Œø‰»
+        //ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         _fadeImage.gameObject.SetActive(false);
         _main = this;
     }
@@ -51,8 +51,8 @@ public class FadeManager : MonoBehaviour
 
 
     /// <summary>
-    /// ƒtƒF[ƒhƒCƒ“ŠJn
-    /// ‚¾‚ñ‚¾‚ñˆÃ‚­‚È‚é
+    /// ï¿½tï¿½Fï¿½[ï¿½hï¿½Cï¿½ï¿½ï¿½Jï¿½n
+    /// ï¿½ï¿½ï¿½ñ‚¾‚ï¿½Ã‚ï¿½ï¿½È‚ï¿½
     /// </summary>
     public void StartFadeIn()
     {
@@ -63,8 +63,8 @@ public class FadeManager : MonoBehaviour
     }
 
     /// <summary>
-    /// ƒtƒF[ƒhƒAƒEƒgŠJn
-    /// ‚¾‚ñ‚¾‚ñ–¾‚é‚­
+    /// ï¿½tï¿½Fï¿½[ï¿½hï¿½Aï¿½Eï¿½gï¿½Jï¿½n
+    /// ï¿½ï¿½ï¿½ñ‚¾‚ñ–¾‚é‚­
     /// </summary>
     public void StartFadeOut(string name)
     {
@@ -81,7 +81,7 @@ public class FadeManager : MonoBehaviour
         while (true)
         {
 
-            //“§–¾“x‚ğ”Z‚­‚µ‚Ä‚¢‚­
+            //ï¿½ï¿½ï¿½ï¿½ï¿½xï¿½ï¿½Zï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½
             color.a += Time.deltaTime;
             _fadeImage.color = color;
             if (color.a >= 1.0f)
@@ -102,9 +102,11 @@ public class FadeManager : MonoBehaviour
         while (true)
         {
 
-            //“§–¾“x‚ğã‚°‚Ä‚¢‚­
+            //ï¿½ï¿½ï¿½ï¿½ï¿½xï¿½ï¿½ï¿½ã‚°ï¿½Ä‚ï¿½ï¿½ï¿½
             color.a -= Time.deltaTime;
             _fadeImage.color = color;
+
+            LogSystem.Log(" color.a " + color.a);
             if (color.a <= 0.0f)
             {
                 color.a = 0.0f;

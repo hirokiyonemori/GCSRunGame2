@@ -12,7 +12,7 @@ namespace LaneGame
         [SerializeField] private HandleCountdown countdown;
         //private Rigidbody rb;
         private PlayerControls controls;
-        
+
         public float movableRange = 3.0f;
         public Rigidbody m_Rigidbody;
         private float turnForce = 500.0f;
@@ -25,7 +25,13 @@ namespace LaneGame
         [SerializeField]
         private GameObject battleStartUI;
 
-        
+        public float slideThreshold = 50f;
+
+        private bool isSliding = false;
+        private Vector2 previousPos;
+        private Vector2 currentPos;
+        const float LOAD_WIDTH = 6f;
+
         private void Awake()
         {
             controls = new PlayerControls(); //this can be replaced with your own control scheme
@@ -51,14 +57,15 @@ namespace LaneGame
             if (PlayerUnitManager.canStart)
             {
                 // 移動中
-                if (!PlayerUnitManager.isBattle){
+                if (!PlayerUnitManager.isBattle)
+                {
                     HandleLateralMovement();
                     HandleForwardMovement();
-				}
-				else
-				{
+                }
+                else
+                {
 
-					if (!characterMovement.GetIsMoving() && !PlayerUnitManager.hasBattleStarted)
+                    if (!characterMovement.GetIsMoving() && !PlayerUnitManager.hasBattleStarted)
                     {
                         PlayerUnitManager.UnitManager.AnimationPlay();
                         //await enemyAttack.BattleStart();
@@ -71,9 +78,9 @@ namespace LaneGame
                     }
                     this.m_Rigidbody.velocity = Vector3.zero;
                 }
-                
+
             }
-            
+
         }
 
         private void GivePlayerSpeed()
@@ -96,7 +103,6 @@ namespace LaneGame
             //Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
 
 
-            
             if ((Input.GetKey(KeyCode.LeftArrow)) && -this.movableRange < this.transform.position.x)
             {
                 //LogSystem.Log(" left " + this.transform.position.x );
@@ -112,17 +118,36 @@ namespace LaneGame
                 //this.rb.AddForce(this.turnForce, 2, 0);
                 this.m_Rigidbody.AddForce(this.turnForce, 2, 0);
             }
-			else
-			{
+            else
+            {
                 this.m_Rigidbody.velocity = transform.forward * forwardSpeed;
             }
-            if (Input.GetKey(KeyCode.Space)){
+            if (Input.GetKey(KeyCode.Space))
+            {
                 //LogSystem.Log(" right " + this.transform.position.x);
-                
+
                 //this.m_Rigidbody.AddForce(new Vector3(0, 2, 0));
             }
             //this.rb.velocity = new Vector3(0, 0, forwardSpeed);
-            
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                previousPos = Input.mousePosition;
+            }
+            if (Input.GetMouseButton(0))
+            {
+                // �X���C�v�ɂ��ړ��������擾
+                currentPos = Input.mousePosition;
+                float diffDistance = (currentPos.x - previousPos.x) / Screen.width * LOAD_WIDTH;
+
+                // ���̃��[�J��x���W��ݒ� �����̊O�ɂłȂ��悤��
+                float newX = Mathf.Clamp(this.transform.localPosition.x + diffDistance, -movableRange, movableRange);
+                this.transform.localPosition = new Vector3(newX, this.transform.localPosition.y, this.transform.localPosition.z);
+
+                // �^�b�v�ʒu���X�V
+                previousPos = currentPos;
+            }
+
 
         }
     }
