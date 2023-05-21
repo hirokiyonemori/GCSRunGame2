@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Localization.Settings;
+using Deniverse.UnityLocalizationSample.Presentation.Presenter;
 
 namespace LaneGame
 {
@@ -13,19 +15,49 @@ namespace LaneGame
 
         private bool isOptionsMenuOpen;
 
-        private void Start()
+
+        /// <summary>
+        /// �A�h���u�̃N���X
+        /// </summary>
+        private AdmobLibrary _admobLibrary;
+
+        public FadeManager fadeManager;
+        int selectedLanguageNo = 0;
+        [SerializeField]
+        SaveLoadManager saveLoadManager;
+
+        private void Awake()
         {
             mainMenu.SetActive(true);
             optionsMenu.SetActive(false);
+
+            _admobLibrary = new AdmobLibrary();
+            _admobLibrary.FirstSetting();
+            //Admob�o�i�[�쐬
+            _admobLibrary.RequestBanner(GoogleMobileAds.Api.AdSize.Banner, GoogleMobileAds.Api.AdPosition.Bottom);
         }
 
-        public void StartGame()
+        private async void Start()
         {
-            SceneManager.LoadScene("GameScene");
+            // Localization の初期化が完了するまで待機します
+            await LocalizationSettings.InitializationOperation.Task;
+            fadeManager.StartFadeIn();
+            // localizeation初期化が完了するまで
+            saveLoadManager.Init();
         }
+
+        public void StartGame(int no)
+        {
+            GameManager.Instance.SetStage(no);
+            _admobLibrary.DestroyBanner();
+            fadeManager.StartFadeOut("GameScene");
+        }
+
 
         public void HandleOptionsMenu()
         {
+
+            selectedLanguageNo = 0;
             //check if options are open or closed
             if (isOptionsMenuOpen)
             {
@@ -42,12 +74,15 @@ namespace LaneGame
             }
         }
 
+
+
         public void QuitGame()
         {
             //this checks if we're in the editor or a build and quits appropriately
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
 #endif
+            _admobLibrary.DestroyBanner();
             Application.Quit();
         }
     }
