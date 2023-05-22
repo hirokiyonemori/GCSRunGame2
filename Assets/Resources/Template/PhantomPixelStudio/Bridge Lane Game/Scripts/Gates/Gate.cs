@@ -30,6 +30,12 @@ namespace LaneGame.Gates
             gateText.text = string.Format(gateValue >= 0 ? $"+{gateValue}" : $"{gateValue}");
         }
 
+        public void ChangeValue(float value)
+        {
+            gateValue = value;
+            gateText.text = string.Format(gateValue >= 0 ? $"+{gateValue}" : $"{gateValue}");
+        }
+
         private void ActivateGate()
         {
             LogSystem.Log($"{gate} gate activated!");
