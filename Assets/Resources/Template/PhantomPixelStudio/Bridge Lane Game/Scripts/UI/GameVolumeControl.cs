@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace LaneGame
 {
-//Controls volume values through a scriptable object that carries the values between scenes
+    //Controls volume values through a scriptable object that carries the values between scenes
     public class GameVolumeControl : MonoBehaviour
     {
         [SerializeField] private GameVolumeSO volumeSettings;
@@ -18,16 +18,13 @@ namespace LaneGame
         [SerializeField] private bool debugMode;
 
 
-        /// <summary>
-        /// ƒAƒhƒ‚ƒu‚ÌƒNƒ‰ƒX
-        /// </summary>
-        private AdmobLibrary _admobLibrary;
 
 
         private void Start()
         {
             LoadVolumes();
             SetVolumes();
+
         }
 
         private void LoadVolumes()
@@ -52,8 +49,6 @@ namespace LaneGame
                 volumeSettings.effectsVolume = 0.20f;
             }
 
-            //Admobƒoƒi[ì¬
-            _admobLibrary.RequestBanner(GoogleMobileAds.Api.AdSize.Banner, GoogleMobileAds.Api.AdPosition.Bottom);
         }
 
         private void SetVolumes()
@@ -108,7 +103,7 @@ namespace LaneGame
         // URL
         public void onClickTwitterButton()
         {
-            Application.OpenURL("https://twitter.com/gamelove_hiro");//""‚Ì’†‚É‚ÍŠJ‚«‚½‚¢Webƒy[ƒW‚ÌURL‚ğ“ü—Í‚µ‚Ü‚·
+            Application.OpenURL("https://twitter.com/gamelove_hiro");//""ï¿½Ì’ï¿½ï¿½É‚ÍŠJï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Webï¿½yï¿½[ï¿½Wï¿½ï¿½URLï¿½ï¿½ï¿½ï¿½Í‚ï¿½ï¿½Ü‚ï¿½
         }
 
     }

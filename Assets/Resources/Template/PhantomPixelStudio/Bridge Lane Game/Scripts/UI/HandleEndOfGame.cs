@@ -22,8 +22,17 @@ namespace LaneGame
 
         private void Awake()
         {
-            AudioClip audio = AudioManager.Instance.bgmStage;
+
+            bool existsKey = ES3.KeyExists("Tutorial");
+            int tutorialNo = 0;
+            if (existsKey)
+            {
+                tutorialNo = ES3.Load<int>("Tutorial");
+            }
+            AudioClip audio = tutorialNo < TutorialManager.TUTORIAL_END ? AudioManager.Instance.bgmStage : AudioManager.Instance.battleBgm;
+
             AudioManager.Instance.PlayBGM(audio);
+            AudioManager.Instance.SetLoop(true);
             youWinScreen.SetActive(false); //turn off the screen at the start of the game
             gameOverScreen.SetActive(false); //turn off the screen at the start of the game
             Time.timeScale = 1f; //reset our time scale in cases where the scene was restarted
@@ -44,6 +53,19 @@ namespace LaneGame
         private void WinGame()
         {
             youWinScreen.SetActive(true);
+            AudioManager.Instance.PlayBGM(AudioManager.Instance.winBgm);
+            AudioManager.Instance.SetLoop(false);
+
+            int clearNo = !GameManager.Instance.HardMode ? (GameManager.Instance.GetStage() + 1) : (GameManager.Instance.GetStage() + 1 + StageManager.STAGE_MAX);
+            LogSystem.Log(" clearNo " + clearNo);
+
+            // ステージ番号を更新する
+            if (GameManager.Instance.StageClear <= clearNo)
+            {
+                GameManager.Instance.StageClear = clearNo;
+                ES3.Save("StageClear", GameManager.Instance.StageClear);
+            }
+
             Time.timeScale = 0;
         }
 
@@ -53,18 +75,28 @@ namespace LaneGame
             Time.timeScale = 0;
         }
 
-        public void RestartLevel()
+        public void RestartLevel(bool win)
         {
             //SceneManager.LoadScene("GameScene");
             // 時間を再開する
-            Time.timeScale = 1;
-            int stage = GameManager.Instance.GetStage();
-            if (stage < 4)
+            if (win)
             {
-                GameManager.Instance.SetStage(stage + 1);
+                int stage = GameManager.Instance.GetStage();
+                //LogSystem.Log(" GameManager.Instance.GetStage() " + GameManager.Instance.GetStage());
+                if (stage + 1 < StageManager.STAGE_MAX)
+                {
+                    GameManager.Instance.SetStage(stage + 1);
+                }
+                else
+                {
+                    //LogSystem.Log("一番最後の場合はランダムでステージに戻す");
+                    int randomNo = Random.Range(0, StageManager.STAGE_MAX);
+                    //LogSystem.Log("一番最後の場合はランダムでステージに戻す" + randomNo);
+                    GameManager.Instance.SetStage(randomNo);
+                }
+
             }
-
-
+            Time.timeScale = 1;
             fadeManager.StartFadeOut("GameScene");
 
         }

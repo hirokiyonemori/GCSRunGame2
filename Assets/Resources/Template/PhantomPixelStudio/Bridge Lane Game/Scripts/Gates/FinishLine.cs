@@ -9,10 +9,10 @@ namespace LaneGame
 {
     public class FinishLine : MonoBehaviour
     {
-        
+
         public event UnityAction OnFinishLineTouch = delegate { };
-        
-        // delegate�̐錾
+
+        // delegate�̐錾
         delegate void OnBattleEvent(int hp);
 
 
@@ -20,27 +20,29 @@ namespace LaneGame
         public PlayerMovement playerMovement;
 
         private void Start()
-		{
-            
+        {
+
             LogSystem.isdebug = true;
+            LogSystem.Log(" GetStage " + GameManager.Instance.GetStage());
 
         }
-		private void Update()
-		{
-          
+        private void Update()
+        {
+
         }
 
-        private void OnTriggerEnter(Collider collision) {
+        private void OnTriggerEnter(Collider collision)
+        {
 
             //LogSystem.Log(" collision.gameObject.tag " + collision.gameObject.tag);
             //LogSystem.Log(" PlayerUnitManager.isBattle " + PlayerUnitManager.isBattle);
-            
-            if ((collision.gameObject.tag == "Fellow" || collision.gameObject.tag == "Player" ) && !PlayerUnitManager.isBattle)
+
+            if ((collision.gameObject.tag == "Fellow" || collision.gameObject.tag == "Player") && !PlayerUnitManager.isBattle)
             {
                 PlayerUnitManager.isBattle = true;
-                
+
                 playerMovement.characterMovement.StartMoving();
-                
+
             }
         }
 

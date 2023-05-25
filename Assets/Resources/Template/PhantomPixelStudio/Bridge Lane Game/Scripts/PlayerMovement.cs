@@ -14,7 +14,7 @@ namespace LaneGame
         private PlayerControls controls;
 
         public float movableRange = 3.0f;
-        public Rigidbody m_Rigidbody;
+        private Rigidbody m_Rigidbody;
         private float turnForce = 500.0f;
 
         public CharacterMovement characterMovement;
@@ -39,6 +39,13 @@ namespace LaneGame
             countdown.StartGame += GivePlayerSpeed;
             PlayerUnitManager.hasBattleStarted = false;
             PlayerUnitManager.isBattle = false;
+            if (ES3.KeyExists("PlayerUnit"))
+            {
+                int playerStartUnit = ES3.Load<int>("PlayerUnit");
+                if (playerStartUnit > 0)
+                    PlayerUnitManager.UnitManager.HandleUnits(playerStartUnit);
+            }
+
         }
 
         private void OnEnable()
@@ -72,6 +79,8 @@ namespace LaneGame
                         StartCoroutine(enemyAttack.AttackPlayer());
 
                         battleStartUI.SetActive(true);
+                        AudioClip audio = AudioManager.Instance.seExplosion;
+                        AudioManager.Instance.PlaySE(audio);
                         PlayerUnitManager.hasBattleStarted = true;
                         // バトル中は移動を止める
 
@@ -120,7 +129,20 @@ namespace LaneGame
             }
             else
             {
-                this.m_Rigidbody.velocity = transform.forward * forwardSpeed;
+                //this.m_Rigidbody.velocity = transform.forward * forwardSpeed;
+                //m_Rigidbody.MovePosition(transform.position + transform.forward * forwardSpeed * Time.fixedDeltaTime);
+
+                // 移動方向の計算
+                // Vector3 moveDirection = transform.forward * forwardSpeed;
+
+                // // 力を加える
+                // m_Rigidbody.AddForce(moveDirection, ForceMode.VelocityChange);
+
+                Vector3 movement = new Vector3(0f, 0f, forwardSpeed).normalized * forwardSpeed;
+
+                // キャラクタを前方向に移動させる
+                transform.Translate(movement * Time.deltaTime, Space.World);
+
             }
             if (Input.GetKey(KeyCode.Space))
             {
@@ -142,6 +164,9 @@ namespace LaneGame
 
                 // ���̃��[�J��x���W��ݒ� �����̊O�ɂłȂ��悤��
                 float newX = Mathf.Clamp(this.transform.localPosition.x + diffDistance, -movableRange, movableRange);
+                //LogSystem.Log(" this.transform.localPosition.x " + this.transform.localPosition.x);
+                //LogSystem.Log(" diffDistance " + diffDistance);
+
                 this.transform.localPosition = new Vector3(newX, this.transform.localPosition.y, this.transform.localPosition.z);
 
                 // �^�b�v�ʒu���X�V

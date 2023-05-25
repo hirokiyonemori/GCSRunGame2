@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Localization.Settings;
 using Deniverse.UnityLocalizationSample.Presentation.Presenter;
+using UnityEngine.UI;
 
 namespace LaneGame
 {
@@ -26,6 +27,22 @@ namespace LaneGame
         [SerializeField]
         SaveLoadManager saveLoadManager;
 
+        [SerializeField]
+        Button hardModeButton;
+
+        [SerializeField]
+        private List<GameObject> hardGameObjectList;
+
+
+        [SerializeField]
+        private List<GameObject> normalGameObjectList;
+
+
+        [SerializeField]
+        private List<Button> normalButtonList;
+
+
+
         private void Awake()
         {
             mainMenu.SetActive(true);
@@ -35,7 +52,63 @@ namespace LaneGame
             _admobLibrary.FirstSetting();
             //Admob�o�i�[�쐬
             _admobLibrary.RequestBanner(GoogleMobileAds.Api.AdSize.Banner, GoogleMobileAds.Api.AdPosition.Bottom);
+            if (GameManager.Instance.StageClear >= StageManager.STAGE_MAX)
+            {
+                hardModeButton.interactable = true;
+            }
+            else
+            {
+                hardModeButton.interactable = false;
+            }
+
+            LogSystem.Log(" GameManager.Instance.StageClear " + GameManager.Instance.StageClear);
+            addButton.interactable = true;
         }
+
+        [SerializeField]
+        private Button addButton;
+
+        // インタースティシャル広告を再生し、プレイヤーの開始ユニットを1増やす方法を示しています。
+        public void UnitStartAdd()
+        {
+            _admobLibrary.PlayInterstitial();
+            int cnt = GameManager.Instance.GetPlayerStartUnit();
+            GameManager.Instance.SetPlayerStartUnit(cnt + 1);
+            addButton.interactable = false;
+        }
+        public void ChangeHardMode()
+        {
+            GameManager.Instance.HardMode = !GameManager.Instance.HardMode;
+            ES3.Save("HardMode", GameManager.Instance.HardMode);
+            if (GameManager.Instance.HardMode)
+            {
+                foreach (var gameObject in hardGameObjectList)
+                {
+                    gameObject.SetActive(true);
+                }
+
+                foreach (var gameObject in normalGameObjectList)
+                {
+                    gameObject.SetActive(false);
+                }
+
+            }
+            else
+            {
+                //hardModeText.text = "Hard Mode: OFF";
+                foreach (var gameObject in hardGameObjectList)
+                {
+                    gameObject.SetActive(false);
+                }
+                foreach (var gameObject in normalGameObjectList)
+                {
+                    gameObject.SetActive(true);
+                }
+
+            }
+        }
+
+
 
         private async void Start()
         {
