@@ -20,8 +20,18 @@ namespace LaneGame
         [SerializeField]
         private GameObjectController gameObjectController;
 
+
+        /// <summary>
+        /// �A�h���u�̃N���X
+        /// </summary>
+        private AdmobLibrary _admobLibrary;
+
+
         private void Awake()
         {
+
+            _admobLibrary = new AdmobLibrary();
+            _admobLibrary.FirstSetting();
 
             bool existsKey = ES3.KeyExists("Tutorial");
             int tutorialNo = 0;
@@ -36,6 +46,7 @@ namespace LaneGame
             youWinScreen.SetActive(false); //turn off the screen at the start of the game
             gameOverScreen.SetActive(false); //turn off the screen at the start of the game
             Time.timeScale = 1f; //reset our time scale in cases where the scene was restarted
+
         }
 
         private void Start()
@@ -95,6 +106,10 @@ namespace LaneGame
                     GameManager.Instance.SetStage(randomNo);
                 }
 
+            }
+            else
+            {
+                _admobLibrary.PlayInterstitial();
             }
             Time.timeScale = 1;
             fadeManager.StartFadeOut("GameScene");
