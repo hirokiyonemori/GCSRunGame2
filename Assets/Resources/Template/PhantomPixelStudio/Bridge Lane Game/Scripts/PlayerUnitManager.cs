@@ -24,8 +24,8 @@ namespace LaneGame
         {
             canStart = false;
             //isBattle = false;
-            deathCnt = 0;
-            playerUnitCount.value = 0;
+            //deathCnt = 0;
+            playerUnitCount.value = 1;
             //the following sets up our singleton pattern
             if (UnitManager != null && UnitManager != this)
                 Destroy(this);
@@ -79,15 +79,30 @@ namespace LaneGame
                 else
                 {
                     //since our clone count is less than our value, we're dead, destroy our main and send the game over signal
-                    Destroy(mainPlayerObject.transform.parent.gameObject);
+                    //Destroy(mainPlayerObject.transform.parent.gameObject);
                     GameOver();
+                    foreach (var player in playerObjectList)
+                    {
+                        Destroy(player);                                                                                           //then using our saved variable, we destroy it
+                    }
+                    playerObjectList.Clear();
+                    //deathCnt = 0;
+                    DeleteChildObjects(playerObject.gameObject);
+
                 }
             }
             else
             {
                 //we have no clones at all, so we're dead, destroy our main and send the game over signal
-                Destroy(mainPlayerObject.transform.parent.gameObject);
+                //Destroy(mainPlayerObject.transform.parent.gameObject);
                 GameOver();
+                foreach (var player in playerObjectList)
+                {
+                    Destroy(player);                                                                                           //then using our saved variable, we destroy it
+                }
+                playerObjectList.Clear();
+                //deathCnt = 0;
+                DeleteChildObjects(playerObject.gameObject);
             }
         }
 
@@ -103,15 +118,23 @@ namespace LaneGame
             //gameObject.SetActive(false);
 
             //we have no clones at all, so we're dead, destroy our main and send the game over signal
-            Destroy(mainPlayerObject.transform.parent.gameObject);
+            //Destroy(mainPlayerObject.transform.parent.gameObject);
             GameOver();
+            foreach (var player in playerObjectList)
+            {
+                Destroy(player);                                                                                           //then using our saved variable, we destroy it
+            }
+            playerObjectList.Clear();
+            DeleteChildObjects(playerObject.gameObject);
+            //            deathCnt = 0;
+
         }
 
 
 
         public void RemoveUnit(GameObject playerObject)
         {
-            if (playerObjectList.Count > 1)
+            if (playerObjectList.Count > 0)
             {
 
                 var index = playerObjectList.IndexOf(playerObject);    // プレイヤーの GameObject がリストの何番目にあるかを調べる
@@ -125,7 +148,7 @@ namespace LaneGame
             }
             else
             {
-                Destroy(mainPlayerObject.transform.parent.gameObject);
+                //Destroy(gameObject);
                 GameOver();
             }
         }
@@ -138,36 +161,33 @@ namespace LaneGame
         {
             playerAnimator.SetBool("Attack", true);
             isBattle = true;
-            if (playerObjectList.Count > 1)                                                                             //check if we have clones
+            //we do have clones so we'll iterate through our value
+            for (var i = 0; i < playerObjectList.Count; i++)
             {
-
-                //we do have clones so we'll iterate through our value
-                for (var i = 0; i < playerObjectList.Count; i++)
-                {
-                    playerObjectList[i].GetComponentInChildren<Animator>().SetBool("Attack", true);
-                }
-
+                playerObjectList[i].GetComponentInChildren<Animator>().SetBool("Attack", true);
             }
         }
 
-        private int deathCnt = 0;
+        //private int deathCnt = 0;
 
         public bool DeathUnits(float value)
         {
 
-            LogSystem.Log(" deathCnt" + deathCnt);
+            //LogSystem.Log(" deathCnt" + deathCnt);
             LogSystem.Log(" .Count " + playerObjectList.Count);
             if (playerObjectList.Count >= 0)                                                                             //check if we have clones
             {
                 LogSystem.Log(" value * -1f " + value * -1f);
-                LogSystem.Log(" deathCnt" + deathCnt);
-                if (playerObjectList.Count >= deathCnt)                                                      //if we have clones, do we have more clones than the gate value is taking away? (since we're negative, we multiply by -1 to make it positive to check our count
+                //LogSystem.Log(" deathCnt" + deathCnt);
+                //if (playerObjectList.Count > deathCnt)                                                      //if we have clones, do we have more clones than the gate value is taking away? (since we're negative, we multiply by -1 to make it positive to check our count
+                if (playerObjectList.Count > 0)                                                      //if we have clones, do we have more clones than the gate value is taking away? (since we're negative, we multiply by -1 to make it positive to check our count
                 {
                     //we do have clones so we'll iterate through our value
                     for (var i = 0; i > value; i--)
                     {
-                        int index = (int)playerObjectList.Count - 1 - deathCnt;
-                        deathCnt = deathCnt + (int)(value * -1f);       //we'll grab a random unit from our list. we subtract 1 here due to Unity's starting number of 0
+                        int index = (int)playerObjectList.Count - 1;
+                        //int index = (int)playerObjectList.Count - 1 - deathCnt;
+                        //deathCnt = deathCnt + (int)(value * -1f);       //we'll grab a random unit from our list. we subtract 1 here due to Unity's starting number of 0
                         LogSystem.Log(" index " + index);
 
                         LogSystem.Log(" playerUnitCount.value " + playerUnitCount.value);
@@ -178,6 +198,7 @@ namespace LaneGame
                             var obj = playerObjectList[index];                                  //we save a variable of the object we chose so we can still access it after we remove it from the list
 
                             playerObjectList[index].GetComponentInChildren<Animator>().SetBool("Death", true);
+                            playerObjectList.RemoveAt(index);
                             //playerObjectList[i].GetComponentInChildren<Animator>().Play("Death", 0, 0); ;
                             //playerObjectList[i].GetComponentInChildren<Animator>().Play("Death");
                         }
@@ -201,7 +222,6 @@ namespace LaneGame
                 LogSystem.Log(" playerUnitCount.value " + playerUnitCount.value);
                 LogSystem.Log(" 死亡しました　DownStart " + value * -1f);
                 // playerAnimator.SetBool("Death", true);
-
                 StartCoroutine(DownStart());
                 return false;
 
@@ -213,19 +233,30 @@ namespace LaneGame
 
         }
 
+        void DeleteChildObjects(GameObject parentObject)
+        {
+            foreach (Transform child in parentObject.transform)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+
         public void AnimationReplay()
         {
+            //LogSystem.Log(" AnimationReplay deathCnt " + deathCnt);
+            LogSystem.Log(" AnimationReplay deathCnt " + playerObjectList.Count);
+
             playerAnimator.Play("Punch", 0, 0); ;
-            if (playerObjectList.Count > 1)                                                                             //check if we have clones
+
+
+            //we do have clones so we'll iterate through our value
+            //for (var i = 0; i < playerObjectList.Count - (deathCnt + 1); i++)
+            for (var i = 0; i < playerObjectList.Count; i++)
             {
-
-                //we do have clones so we'll iterate through our value
-                for (var i = 0; i < playerObjectList.Count - deathCnt; i++)
-                {
-                    playerObjectList[i].GetComponentInChildren<Animator>().Play("Punch", 0, 0);
-                }
-
+                playerObjectList[i].GetComponentInChildren<Animator>().Play("Punch", 0, 0);
             }
+
+
         }
 
 

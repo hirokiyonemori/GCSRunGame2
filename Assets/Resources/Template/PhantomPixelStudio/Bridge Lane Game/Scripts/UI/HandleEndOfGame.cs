@@ -27,6 +27,7 @@ namespace LaneGame
         private AdmobLibrary _admobLibrary;
 
 
+
         private void Awake()
         {
 
@@ -105,14 +106,23 @@ namespace LaneGame
                     //LogSystem.Log("一番最後の場合はランダムでステージに戻す" + randomNo);
                     GameManager.Instance.SetStage(randomNo);
                 }
-
+                fadeManager.StartFadeOut("GameScene");
             }
             else
             {
-                _admobLibrary.PlayInterstitial();
+                //_admobLibrary.PlayInterstitial();
+                gameOverScreen.SetActive(false);
+                PlayerUnitManager.UnitManager.HandleUnits(10);
+                if (PlayerUnitManager.hasBattleStarted)
+                {
+                    PlayerUnitManager.UnitManager.AnimationPlay();
+                    StartCoroutine(enemyAttack.AttackPlayer());
+                }
+                AudioManager.Instance.PlayBGM(AudioManager.Instance.battleBgm);
+
             }
             Time.timeScale = 1;
-            fadeManager.StartFadeOut("GameScene");
+
 
         }
 

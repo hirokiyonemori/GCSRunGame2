@@ -19,7 +19,7 @@ public class AudioManager : MonoBehaviour
     }
 
     public AudioClip bgmTitle, bgmStage, battleBgm, winBgm, defeatBgm;
-    public AudioClip seExplosion;
+    public AudioClip seExplosion, waterSe;
 
     [SerializeField]
     private AudioSource bgmAudioSource;

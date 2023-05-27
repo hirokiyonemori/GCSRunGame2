@@ -6,30 +6,35 @@ namespace LaneGame.AI
     {
         private void OnTriggerEnter(Collider collision)
         {
-            // ƒvƒŒƒCƒ„[‚ÆÕ“Ë‚µ‚½ê‡
+            // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ÆÕ“Ë‚ï¿½ï¿½ï¿½ï¿½ê‡
             if (collision.gameObject.tag == "Player")
             {
-                // ƒvƒŒƒCƒ„[ƒ†ƒjƒbƒgƒ}ƒl[ƒWƒƒ[‚©‚çƒvƒŒƒCƒ„[‚Ì”‚ğ1Œ¸‚ç‚·
+                // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½jï¿½bï¿½gï¿½}ï¿½lï¿½[ï¿½Wï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Ìï¿½ï¿½ï¿½1ï¿½ï¿½ï¿½ç‚·
                 PlayerUnitManager.UnitManager.HandleUnits(-1);
                 //PlayerUnitManager.UnitManager.RemoveUnit(collision.gameObject);
-                // “G‚ÌƒIƒuƒWƒFƒNƒg‚ª"Enemy"ƒ^ƒO‚ğ‚Á‚Ä‚¢‚éê‡‚ÍA“G‚ÌeƒIƒuƒWƒFƒNƒg‚ğíœ‚·‚é
+                // ï¿½Gï¿½ÌƒIï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½"Enemy"ï¿½^ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ê‡ï¿½ÍAï¿½Gï¿½Ìeï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½íœï¿½ï¿½ï¿½ï¿½
+                AudioManager.Instance.PlaySE(AudioManager.Instance.waterSe);
 
-                if (this.gameObject.CompareTag("Enemy")){
-                    Destroy(gameObject.transform.parent.gameObject);
-                }
-           
+                // å®Ÿè£…äºˆå®šã ã£ãŸ
+                // if (this.gameObject.CompareTag("Enemy"))
+                // {
+                //     Destroy(gameObject.transform.parent.gameObject);
+                // }
+
             }
             //LogSystem.Log(" collision.gameObject.tag " + collision.gameObject.tag);
-            // –¡•û‚ÆÕ“Ë‚µ‚½ê‡
-            if (collision.gameObject.tag == "Fellow" )
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ÆÕ“Ë‚ï¿½ï¿½ï¿½ï¿½ê‡
+            if (collision.gameObject.tag == "Fellow")
             {
-                // –¡•û‚ÌƒIƒuƒWƒFƒNƒg‚ğíœ‚·‚é
-                // “G‚ÌƒIƒuƒWƒFƒNƒg‚ª"Enemy"ƒ^ƒO‚ğ‚Á‚Ä‚¢‚éê‡‚ÍA“G‚ÌeƒIƒuƒWƒFƒNƒg‚ğíœ‚·‚é
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ÌƒIï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½íœï¿½ï¿½ï¿½ï¿½
+                // ï¿½Gï¿½ÌƒIï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½"Enemy"ï¿½^ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ê‡ï¿½ÍAï¿½Gï¿½Ìeï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½íœï¿½ï¿½ï¿½ï¿½
                 PlayerUnitManager.UnitManager.RemoveUnit(collision.gameObject);
-                if (this.gameObject.CompareTag("Enemy"))
-                {
-                    Destroy(gameObject.transform.parent.gameObject);
-                }
+                AudioManager.Instance.PlaySE(AudioManager.Instance.waterSe);
+                //// å®Ÿè£…äºˆå®šã ã£ãŸ
+                // if (this.gameObject.CompareTag("Enemy"))
+                // {
+                //     Destroy(gameObject.transform.parent.gameObject);
+                // }
 
             }
         }

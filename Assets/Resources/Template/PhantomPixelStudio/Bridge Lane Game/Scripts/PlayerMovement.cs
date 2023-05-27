@@ -77,7 +77,6 @@ namespace LaneGame
                         PlayerUnitManager.UnitManager.AnimationPlay();
                         //await enemyAttack.BattleStart();
                         StartCoroutine(enemyAttack.AttackPlayer());
-
                         battleStartUI.SetActive(true);
                         AudioClip audio = AudioManager.Instance.seExplosion;
                         AudioManager.Instance.PlaySE(audio);

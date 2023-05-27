@@ -20,6 +20,7 @@ public class AdmobLibrary
     {
         MobileAds.Initialize(initStatus => { });
         InitInterstitial();
+        InitRewarded();
     }
 
     /// <summary>
@@ -137,9 +138,9 @@ public class AdmobLibrary
     {
         string adUnitId;
 #if UNITY_ANDROID
-        adUnitId = "ca-app-pub-3940256099942544/5354046379";
+        adUnitId = "ca-app-pub-8148356110096114/1150926723";
 #elif UNITY_IPHONE
-        adUnitId = "ca-app-pub-3940256099942544/1712485313";
+        adUnitId = "ca-app-pub-8148356110096114/6972376843";
 #else
 		adUnitId = "unexpected_platform";
 #endif
@@ -178,7 +179,7 @@ public class AdmobLibrary
     /// </summary>
     public void ShowReawrd()
     {
-        InitRewarded();
+
         if (this._rewardedAd.IsLoaded())
         {
             this._rewardedAd.Show();
