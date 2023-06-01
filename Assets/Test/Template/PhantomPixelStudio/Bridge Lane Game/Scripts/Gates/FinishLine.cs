@@ -22,7 +22,7 @@ namespace LaneGame
         private void Start()
         {
 
-            LogSystem.isdebug = true;
+            //            LogSystem.isdebug = true;
             LogSystem.Log(" GetStage " + GameManager.Instance.GetStage());
 
         }

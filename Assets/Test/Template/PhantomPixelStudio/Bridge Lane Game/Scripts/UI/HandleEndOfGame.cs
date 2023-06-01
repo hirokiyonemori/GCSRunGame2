@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using LaneGame;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace LaneGame
 {
@@ -26,6 +27,9 @@ namespace LaneGame
         /// </summary>
         private AdmobLibrary _admobLibrary;
 
+        [SerializeField]
+        private Button restartButton;
+
 
 
         private void Awake()
@@ -48,6 +52,8 @@ namespace LaneGame
             gameOverScreen.SetActive(false); //turn off the screen at the start of the game
             Time.timeScale = 1f; //reset our time scale in cases where the scene was restarted
 
+            GameManager.Instance.PlayCnt = 0;
+
         }
 
         private void Start()
@@ -57,7 +63,6 @@ namespace LaneGame
             fadeManager.StartFadeIn();
             PlayerUnitManager.UnitManager.GameOver +=
                 GameOverScreen; //subscribe to the game over event from the unit manager
-
 
             enemyAttack.OnFinishLineTouch += WinGame; //subscribe to the win game event from the finish line
         }
@@ -110,15 +115,20 @@ namespace LaneGame
             }
             else
             {
-                //_admobLibrary.PlayInterstitial();
-                gameOverScreen.SetActive(false);
-                PlayerUnitManager.UnitManager.HandleUnits(10);
-                if (PlayerUnitManager.hasBattleStarted)
+                _admobLibrary.PlayInterstitial();
+                if (GameManager.Instance.PlayCnt <= 0)
                 {
-                    PlayerUnitManager.UnitManager.AnimationPlay();
-                    StartCoroutine(enemyAttack.AttackPlayer());
+                    gameOverScreen.SetActive(false);
+                    PlayerUnitManager.UnitManager.HandleUnits(10);
+                    if (PlayerUnitManager.hasBattleStarted)
+                    {
+                        PlayerUnitManager.UnitManager.AnimationPlay();
+                        StartCoroutine(enemyAttack.AttackPlayer());
+                    }
+                    AudioManager.Instance.PlayBGM(AudioManager.Instance.battleBgm);
+                    GameManager.Instance.PlayCnt = 1;
+                    restartButton.interactable = false;
                 }
-                AudioManager.Instance.PlayBGM(AudioManager.Instance.battleBgm);
 
             }
             Time.timeScale = 1;

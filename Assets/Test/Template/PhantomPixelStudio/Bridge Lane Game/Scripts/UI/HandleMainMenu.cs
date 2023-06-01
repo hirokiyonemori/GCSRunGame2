@@ -71,8 +71,8 @@ namespace LaneGame
         // インタースティシャル広告を再生し、プレイヤーの開始ユニットを1増やす方法を示しています。
         public void UnitStartAdd()
         {
-            //_admobLibrary.PlayInterstitial();
-            _admobLibrary.ShowReawrd();
+            _admobLibrary.PlayInterstitial();
+            //_admobLibrary.ShowReawrd();
             int cnt = GameManager.Instance.GetPlayerStartUnit();
             GameManager.Instance.SetPlayerStartUnit(cnt + 1);
             addButton.interactable = false;
