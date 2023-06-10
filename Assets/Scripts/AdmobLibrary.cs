@@ -12,6 +12,7 @@ public class AdmobLibrary
     private InterstitialAd _interstitial;
     private RewardedAd _rewardedAd;
     public Action<double> OnReward;
+    public Action<bool> onIntersitial;
 
     /// <summary>
     /// 初回に呼ぶ
@@ -20,8 +21,14 @@ public class AdmobLibrary
     {
         MobileAds.Initialize(initStatus => { });
         InitInterstitial();
-        InitRewarded();
+        //InitRewarded();
     }
+
+    public void InitReward()
+    {
+        //InitRewarded();
+    }
+
 
     /// <summary>
     /// バナー広告を生成
@@ -138,9 +145,9 @@ public class AdmobLibrary
     {
         string adUnitId;
 #if UNITY_ANDROID
-        adUnitId = "ca-app-pub-8148356110096114/1150926723";
+        adUnitId = "ca-app-pub-8148356110096114/1294083291";
 #elif UNITY_IPHONE
-        adUnitId = "ca-app-pub-8148356110096114/6972376843";
+        adUnitId = "ca-app-pub-8148356110096114/6467315087";
 #else
 		adUnitId = "unexpected_platform";
 #endif
@@ -179,11 +186,8 @@ public class AdmobLibrary
     /// </summary>
     public void ShowReawrd()
     {
-
-        if (this._rewardedAd.IsLoaded())
-        {
-            this._rewardedAd.Show();
-        }
+        InitRewarded();
+        //this._rewardedAd.Show();
     }
 
     /// <summary>
@@ -216,6 +220,7 @@ public class AdmobLibrary
     private void HandleOnAdClosed(object sender, EventArgs args)
     {
         Debug.Log("HandleAdClosed event received");
+        onIntersitial(true);
     }
 
     private void HandleOnAdOpening(object sender, EventArgs args)
@@ -223,9 +228,19 @@ public class AdmobLibrary
         Debug.Log("HandleAdOpening event received");
     }
 
+
+
+
+
     private void HandleRewardedAdLoaded(object sender, EventArgs args)
     {
         Debug.Log("HandleRewardedAdLoaded event received");
+        this._rewardedAd.Show();
+    }
+
+    private void HandleRewardBasedVideoLoaded(object sender, EventArgs args)
+    {
+        this._rewardedAd.Show();
     }
 
     private void HandleRewardedAdOpening(object sender, EventArgs args)
@@ -259,5 +274,4 @@ public class AdmobLibrary
                         + amount.ToString(CultureInfo.InvariantCulture) + " " + type);
         OnReward?.Invoke(amount);
     }
-
 }

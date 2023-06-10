@@ -36,6 +36,7 @@ namespace LaneGame
         {
 
             _admobLibrary = new AdmobLibrary();
+            //_admobLibrary.InitReward();
             _admobLibrary.FirstSetting();
 
             bool existsKey = ES3.KeyExists("Tutorial");
@@ -111,11 +112,17 @@ namespace LaneGame
                     //LogSystem.Log("一番最後の場合はランダムでステージに戻す" + randomNo);
                     GameManager.Instance.SetStage(randomNo);
                 }
+                Time.timeScale = 1;
                 fadeManager.StartFadeOut("GameScene");
+
             }
             else
             {
                 _admobLibrary.PlayInterstitial();
+                //_admobLibrary.ShowReawrd();
+                //_admobLibrary.OnReward += (double value) =>
+
+#if UNITY_ANDROID
                 if (GameManager.Instance.PlayCnt <= 0)
                 {
                     gameOverScreen.SetActive(false);
@@ -128,10 +135,35 @@ namespace LaneGame
                     AudioManager.Instance.PlayBGM(AudioManager.Instance.battleBgm);
                     GameManager.Instance.PlayCnt = 1;
                     restartButton.interactable = false;
+                    PlayerUnitManager.UnitManager.StartInvincibility();
                 }
+                Time.timeScale = 1;
+#else
+                _admobLibrary.onIntersitial += (bool b) =>
+                {
+
+                    if (GameManager.Instance.PlayCnt <= 0)
+                    {
+                        gameOverScreen.SetActive(false);
+                        PlayerUnitManager.UnitManager.HandleUnits(10);
+                        if (PlayerUnitManager.hasBattleStarted)
+                        {
+                            PlayerUnitManager.UnitManager.AnimationPlay();
+                            StartCoroutine(enemyAttack.AttackPlayer());
+                        }
+                        AudioManager.Instance.PlayBGM(AudioManager.Instance.battleBgm);
+                        GameManager.Instance.PlayCnt = 1;
+                        restartButton.interactable = false;
+                        PlayerUnitManager.UnitManager.StartInvincibility();
+                    }
+                    Time.timeScale = 1;
+                };
+#endif
+                restartButton.interactable = false;
+
 
             }
-            Time.timeScale = 1;
+
 
 
         }
@@ -143,6 +175,7 @@ namespace LaneGame
 #endif
             //Application.Quit();
             // 時間を再開する
+            PlayerUnitManager.UnitManager.isEnd = true;
             Time.timeScale = 1;
             AudioManager.Instance.StopBGM();
             fadeManager.StartFadeOut("MainMenu");
