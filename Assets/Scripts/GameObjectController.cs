@@ -16,28 +16,7 @@ public class GameObjectController : MonoBehaviour
     public GateRight rightGateStage;
 
     [TabGroup("GameObject")]
-    public List<GameObject> listGameObject1;
-
-    [TabGroup("GameObject2")]
-    public List<GameObject> listGameObject2;
-
-    [TabGroup("GameObject3")]
-    public List<GameObject> listGameObject3;
-
-    [TabGroup("GameObject4")]
-    public List<GameObject> listGameObject4;
-
-    [TabGroup("GameObject5")]
-    public List<GameObject> listGameObject5;
-
-    [TabGroup("GameObject6")]
-    public List<GameObject> listGameObject6;
-
-    [TabGroup("GameObject7")]
-    public List<GameObject> listGameObject7;
-
-    [TabGroup("GameObject8")]
-    public List<GameObject> listGameObject8;
+    public List<GameObject> stageList;
 
 
     // ゲームオブジェクトの表示・非表示を切り替えるための関数
@@ -89,62 +68,67 @@ public class GameObjectController : MonoBehaviour
     }
     private void SetStage(int stageNo)
     {
-
-        switch (stageNo)
+        foreach (var stage in stageList)
         {
-            case 0:
-                for (int i = 0; i < listGameObject1.Count; i++)
-                {
-                    listGameObject(listGameObject1[i]);
-                }
-                break;
-            case 1:
-                for (int i = 0; i < listGameObject2.Count; i++)
-                {
-                    listGameObject(listGameObject2[i]);
-                }
-                break;
-            case 2:
-                for (int i = 0; i < listGameObject3.Count; i++)
-                {
-                    listGameObject(listGameObject3[i]);
-                }
-                break;
-            case 3:
-                for (int i = 0; i < listGameObject4.Count; i++)
-                {
-                    listGameObject(listGameObject4[i]);
-                }
-                break;
-            case 4:
-                for (int i = 0; i < listGameObject5.Count; i++)
-                {
-                    listGameObject(listGameObject5[i]);
-                }
-                break;
-
-            case 5:
-                for (int i = 0; i < listGameObject6.Count; i++)
-                {
-                    listGameObject(listGameObject6[i]);
-                }
-                break;
-            case 6:
-                for (int i = 0; i < listGameObject7.Count; i++)
-                {
-                    listGameObject(listGameObject7[i]);
-                }
-                break;
-            case 7:
-                for (int i = 0; i < listGameObject8.Count; i++)
-                {
-                    listGameObject(listGameObject8[i]);
-                }
-                break;
-            default:
-                Debug.LogError("Invalid stage number.");
-                break;
+            stage.SetActive(false);
         }
+        stageList[stageNo].SetActive(true);
+
+        // switch (stageNo)
+        // {
+        //     case 0:
+        //         for (int i = 0; i < listGameObject1.Count; i++)
+        //         {
+        //             listGameObject(listGameObject1[i]);
+        //         }
+        //         break;
+        //     case 1:
+        //         for (int i = 0; i < listGameObject2.Count; i++)
+        //         {
+        //             listGameObject(listGameObject2[i]);
+        //         }
+        //         break;
+        //     case 2:
+        //         for (int i = 0; i < listGameObject3.Count; i++)
+        //         {
+        //             listGameObject(listGameObject3[i]);
+        //         }
+        //         break;
+        //     case 3:
+        //         for (int i = 0; i < listGameObject4.Count; i++)
+        //         {
+        //             listGameObject(listGameObject4[i]);
+        //         }
+        //         break;
+        //     case 4:
+        //         for (int i = 0; i < listGameObject5.Count; i++)
+        //         {
+        //             listGameObject(listGameObject5[i]);
+        //         }
+        //         break;
+
+        //     case 5:
+        //         for (int i = 0; i < listGameObject6.Count; i++)
+        //         {
+        //             listGameObject(listGameObject6[i]);
+        //         }
+        //         break;
+        //     case 6:
+        //         for (int i = 0; i < listGameObject7.Count; i++)
+        //         {
+        //             listGameObject(listGameObject7[i]);
+        //         }
+        //         break;
+        //     case 7:
+        //         for (int i = 0; i < listGameObject8.Count; i++)
+        //         {
+        //             listGameObject(listGameObject8[i]);
+        //         }
+        //         break;
+        //     default:
+        //         Debug.LogError("Invalid stage number.");
+        //         break;
+        // }
 
     }
     private void ChangeGatesValues(List<Gate> gates, List<int> values)

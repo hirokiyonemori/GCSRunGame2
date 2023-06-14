@@ -48,10 +48,7 @@ namespace LaneGame
             mainMenu.SetActive(true);
             optionsMenu.SetActive(false);
 
-            _admobLibrary = new AdmobLibrary();
-            _admobLibrary.FirstSetting();
-            //Admob�o�i�[�쐬
-            _admobLibrary.RequestBanner(GoogleMobileAds.Api.AdSize.Banner, GoogleMobileAds.Api.AdPosition.Bottom);
+
             if (GameManager.Instance.StageClear >= StageManager.STAGE_MAX)
             {
                 hardModeButton.interactable = true;
@@ -63,6 +60,10 @@ namespace LaneGame
 
             LogSystem.Log(" GameManager.Instance.StageClear " + GameManager.Instance.StageClear);
             addButton.interactable = true;
+            _admobLibrary = new AdmobLibrary();
+            _admobLibrary.FirstSetting();
+            //Admob�o�i�[�쐬
+            _admobLibrary.RequestBanner(GoogleMobileAds.Api.AdSize.Banner, GoogleMobileAds.Api.AdPosition.Bottom);
         }
 
         [SerializeField]
@@ -71,11 +72,16 @@ namespace LaneGame
         // インタースティシャル広告を再生し、プレイヤーの開始ユニットを1増やす方法を示しています。
         public void UnitStartAdd()
         {
-            _admobLibrary.PlayInterstitial();
-            //_admobLibrary.ShowReawrd();
-            int cnt = GameManager.Instance.GetPlayerStartUnit();
-            GameManager.Instance.SetPlayerStartUnit(cnt + 1);
+            //_admobLibrary.PlayInterstitial();
+            _admobLibrary.ShowReawrd();
+            _admobLibrary.OnReward += (double d) =>
+            {
+                int cnt = GameManager.Instance.GetPlayerStartUnit();
+                GameManager.Instance.SetPlayerStartUnit(cnt + 1);
+                
+            };
             addButton.interactable = false;
+            
         }
         public void ChangeHardMode()
         {

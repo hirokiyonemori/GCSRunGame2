@@ -32,11 +32,14 @@ MonoBehaviour:
     assemblyNames:
     - Assembly-CSharp
     - Assembly-CSharp-firstpass
+    - Autodesk.Fbx
+    - Autodesk.Fbx.Editor
     - Cinemachine
+    - FbxBuildTestAssets
     - GoogleMobileAds.Editor
-    - Scrmizu
     - Sirenix.OdinInspector.Modules.UnityLocalization
     - Sirenix.OdinInspector.Modules.UnityLocalization.Editor
+    - StompyRobot.SRDebugger
     - StompyRobot.SRDebugger.Editor
     - StompyRobot.SRF
     - StompyRobot.SRF.Editor

@@ -38,9 +38,11 @@ public class AdmobLibrary
     public void RequestBanner(AdSize size, AdPosition position)
     {
 #if UNITY_ANDROID
-        string adUnitId = "ca-app-pub-8148356110096114/5144181083";
+        //string adUnitId = "ca-app-pub-8148356110096114/5144181083";
+        string adUnitId = "ca-app-pub-5986483046196840/5906124024";
 #elif UNITY_IPHONE
-        string adUnitId = "ca-app-pub-8148356110096114/8449068481";
+        //string adUnitId = "ca-app-pub-8148356110096114/8449068481";
+        string adUnitId = "ca-app-pub-5986483046196840/9981062416";
 #else
 		string adUnitId = "unexpected_platform";
 #endif
@@ -84,9 +86,11 @@ public class AdmobLibrary
     private void InitInterstitial()
     {
 #if UNITY_ANDROID
-        string adUnitId = "ca-app-pub-8148356110096114/7314221842";
+        //string adUnitId = "ca-app-pub-8148356110096114/7314221842";
+        string adUnitId = "ca-app-pub-5986483046196840/9182986068";
 #elif UNITY_IPHONE
-        string adUnitId = "ca-app-pub-8148356110096114/9550026031";
+        //string adUnitId = "ca-app-pub-8148356110096114/9550026031";
+        string adUnitId = "ca-app-pub-5986483046196840/9510289126";
 #else
         string adUnitId = "unexpected_platform";
 #endif
@@ -145,9 +149,11 @@ public class AdmobLibrary
     {
         string adUnitId;
 #if UNITY_ANDROID
-        adUnitId = "ca-app-pub-8148356110096114/1294083291";
+        //adUnitId = "ca-app-pub-8148356110096114/1294083291";
+        adUnitId = "ca-app-pub-5986483046196840/1568273828";
 #elif UNITY_IPHONE
-        adUnitId = "ca-app-pub-8148356110096114/6467315087";
+        //adUnitId = "ca-app-pub-8148356110096114/6467315087";
+        adUnitId = "ca-app-pub-5986483046196840/9521897413";
 #else
 		adUnitId = "unexpected_platform";
 #endif
