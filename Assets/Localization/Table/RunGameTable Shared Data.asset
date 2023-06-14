@@ -1,0 +1,108 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: RunGameTable Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: RunGameTable
+  m_TableCollectionNameGuidString: 28fa2edd2d6d8403aa19dc616262610f
+  m_Entries:
+  - m_Id: 34199298048
+    m_Key: TitleString
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42856341504
+    m_Key: NextStage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50959736832
+    m_Key: BackToTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3225007677440
+    m_Key: Japanese
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3370881376256
+    m_Key: English
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3455883141120
+    m_Key: Indonesia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366556541345792
+    m_Key: TutorialTitle1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366571313684480
+    m_Key: TutorialContents1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 369487504203776
+    m_Key: TutorialTitle2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 369489324531712
+    m_Key: TutorialContents2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 370151621910528
+    m_Key: TutorialTitle3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 370190767349760
+    m_Key: TutorialContents3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 370206839922688
+    m_Key: TutorialTitle4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 370218860797952
+    m_Key: TutorialContents4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 719626437648384
+    m_Key: TutorialBackButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 719751004282880
+    m_Key: TutorialNextButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3350425477570560
+    m_Key: HardModeButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3350665815384064
+    m_Key: UnitPlayerAdd
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3351067428380672
+    m_Key: NormalModeButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5863149356965888
+    m_Key: RestartButton
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 6027144870367854618
+  references:
+    version: 2
+    RefIds:
+    - rid: 6027144870367854618
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1684182118020
