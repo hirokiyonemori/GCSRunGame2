@@ -137,7 +137,6 @@
      <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
      <None Include="Assets/Test/BizulkaProduction/Stickman/README.txt" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Overlay.shader" />
-     <None Include="Assets/AddressableAssetsData/link.xml" />
      <None Include="Assets/Test/Template/PhantomPixelStudio/Bridge Lane Game/Documentation/Audio Attributes.txt" />
      <None Include="Assets/Test/WipeSwipe/Documentation/ReadMe.txt" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_Bitmap.shader" />
